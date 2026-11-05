@@ -348,8 +348,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function openLocation(location) {
     // Enlaces de ejemplo (dirección ficticia) - ceremonia y celebración
     const mapsUrls = {
-        ceremony: "https://maps.app.goo.gl/qb4aGMMEwRixPiik6",
-        reception: "https://maps.app.goo.gl/qb4aGMMEwRixPiik6"
+        ceremony: "https://maps.app.goo.gl/KrBziv9SaeAmGbND9",
+        reception: "https://maps.app.goo.gl/KrBziv9SaeAmGbND9"
     };
     const mapsUrl = mapsUrls[location] || mapsUrls.ceremony;
     window.open(mapsUrl, '_blank');

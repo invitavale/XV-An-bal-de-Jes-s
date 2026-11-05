@@ -200,7 +200,7 @@
             margin-left: -9px;
         }
         .dress-swatches span:first-child { margin-left: 0; }
-        .dress-swatches span:last-child { margin-left: 6px; }
+        .dress-swatches + .dress-swatches { margin-top: -.4rem; }
         .dress-note { font-size: .88rem; opacity: .85; margin-bottom: 0 !important; }
         .card-thanks { font-style: italic; color: #FFE39A !important; margin-bottom: 0 !important; }
 
@@ -339,7 +339,7 @@
         <!-- Intro en video: el toque inicia el video y la música -->
         <div id="introScreen" class="intro" role="button" tabindex="0" aria-label="Toca para abrir la invitación">
             <div class="intro-backdrop" aria-hidden="true"></div>
-            <video id="introVideo" class="intro-video" src="intro.mp4" poster="intro-poster.jpg"
+            <video id="introVideo" class="intro-video" src="intro.mp4?v=2" poster="intro-poster.jpg?v=2"
                    muted playsinline webkit-playsinline preload="auto" disablepictureinpicture
                    disableremoteplayback x-webkit-airplay="deny" aria-hidden="true"></video>
             <div class="intro-vignette" aria-hidden="true"></div>
@@ -470,16 +470,22 @@
                         <h3>Código de Vestimenta</h3>
                         <p class="dress-type">Formal</p>
                         <div class="dress-divider" aria-hidden="true"></div>
-                        <p class="dress-label">Colores exclusivos del quinceañero</p>
-                        <div class="dress-swatches" role="img" aria-label="Tonos de azul y amarillo">
+                        <p class="dress-label">Paleta de colores sugerida</p>
+                        <div class="dress-swatches" role="img" aria-label="Cinco tonos de azul">
                             <span style="--c:#1F3F8F"></span>
                             <span style="--c:#3A62C4"></span>
                             <span style="--c:#5C86DE"></span>
                             <span style="--c:#8BAEEB"></span>
                             <span style="--c:#BCD3F6"></span>
-                            <span style="--c:#F2C94C"></span>
                         </div>
-                        <p class="dress-note">Te pedimos amablemente evitar los tonos azules y el amarillo.</p>
+                        <div class="dress-swatches" role="img" aria-label="Cinco tonos de amarillo">
+                            <span style="--c:#B8860B"></span>
+                            <span style="--c:#D9A520"></span>
+                            <span style="--c:#F2C94C"></span>
+                            <span style="--c:#F7DC7A"></span>
+                            <span style="--c:#FCEDB5"></span>
+                        </div>
+                        <p class="dress-note">Te invitamos cordialmente a vestir en tonos azules y amarillos, los mismos colores que lucirá el cumpleañero, para que juntos hagamos brillar esta noche estrellada.</p>
                     </div>
 
                     <div class="party-card">
@@ -610,7 +616,7 @@
             } catch(e) {}
         })();
         </script>
-        <script src="JAVAB.js?v=28" defer></script>
+        <script src="JAVAB.js?v=29" defer></script>
         <script src="intro.js?v=7" defer></script>
 </body>
 </html>
