@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aníbal de Jesús Polanco Viloria · Fiesta de Cumpleaños</title>
     <meta name="theme-color" content="#0B1C3D">
+
+    <!-- Vista previa al compartir (WhatsApp, Facebook, Instagram, Telegram, iMessage) -->
+    <meta name="description" content="Te invito a celebrar conmigo una noche mágica bajo un cielo lleno de estrellas · Martes 29 de diciembre de 2026 · 8:00 p. m. · Royal Palace">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Invitavale">
+    <meta property="og:locale" content="es_DO">
+    <meta property="og:url" content="http://invitavale.com/XV-An-bal-de-Jes-s/">
+    <meta property="og:title" content="Aníbal de Jesús Polanco Viloria · Fiesta de Cumpleaños">
+    <meta property="og:description" content="Te invito a celebrar conmigo una noche mágica bajo un cielo lleno de estrellas · 29 de diciembre de 2026 · 8:00 p. m.">
+    <meta property="og:image" content="http://invitavale.com/XV-An-bal-de-Jes-s/og-portada.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Aníbal de Jesús Polanco Viloria">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aníbal de Jesús Polanco Viloria · Fiesta de Cumpleaños">
+    <meta name="twitter:image" content="http://invitavale.com/XV-An-bal-de-Jes-s/og-portada.jpg">
+    <link rel="canonical" href="http://invitavale.com/XV-An-bal-de-Jes-s/">
     <link rel="preload" as="image" href="intro-poster.jpg">
     <link rel="preload" as="image" href="mensaje-fondo.jpg">
     <link rel="preload" as="font" type="font/woff2" href="fonts/libre-caslon.woff2" crossorigin>
@@ -14,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CCSB.css?v=27">
-    <link rel="stylesheet" href="intro.css?v=4">
+    <link rel="stylesheet" href="intro.css?v=7">
     <noscript><style>.intro{display:none!important}html.intro-active,html.intro-active body{overflow:auto!important;height:auto}html.intro-active .hero-bg,html.intro-active .hero-text>*,html.intro-active .top-garland{opacity:1!important;filter:none!important;scale:1!important;translate:none!important}</style></noscript>
     <link rel="preload" as="image" href="fondo-cielo.jpg">
     <style>
@@ -189,67 +207,131 @@
         /* ---------- Regalos con datos bancarios ---------- */
         .gifts-container .gift-text { order: 3 !important; }
         .gifts-container .gift-more { order: 4 !important; }
-        .gifts-container .bank-card { order: 5 !important; }
-        .bank-card[hidden] { display: none; }
-        .bank-card.is-open { animation: bankIn .7s cubic-bezier(.16, 1, .3, 1) both; }
-        @keyframes bankIn {
-            from { opacity: 0; transform: translateY(-10px) scale(.97); filter: blur(4px); }
-            to   { opacity: 1; transform: none; filter: none; }
-        }
         .icon-cumple { width: 9rem !important; height: auto !important; max-width: none !important; }
 
         /* ---------- Brillo: estrellas titilando sobre la invitación ---------- */
-        .sky-sparkles { position: fixed; inset: 0; z-index: 900; pointer-events: none; overflow: hidden; }
-        .sky-sparkles i {
+        .section-stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .footer { position: relative; }
+        .footer > .footer-art { z-index: 1; }
+        .footer > .final-panel { position: relative; z-index: 1; }
+        .section-stars i {
             position: absolute;
             left: var(--x); top: var(--y);
             width: var(--s); height: var(--s);
             border-radius: 50%;
-            background: #FFF6D6;
-            box-shadow: 0 0 6px 1px rgba(255, 227, 154, .9), 0 0 14px 3px rgba(242, 201, 76, .35);
+            background: #FFF8E1;
+            box-shadow: 0 0 6px 1px rgba(255, 236, 180, .95), 0 0 16px 4px rgba(242, 201, 76, .4);
             opacity: 0;
             animation: skyTwinkle var(--d) ease-in-out var(--delay) infinite;
         }
-        .sky-sparkles i.star {
-            border-radius: 0; background: none; box-shadow: none;
-            width: calc(var(--s) * 4); height: calc(var(--s) * 4);
+        .section-stars i.star {
+            border-radius: 50%;
+            width: var(--s); height: var(--s);
         }
-        .sky-sparkles i.star::before, .sky-sparkles i.star::after {
+        .section-stars i.star::before, .section-stars i.star::after {
             content: ''; position: absolute; left: 50%; top: 50%;
-            background: linear-gradient(90deg, transparent, #FFF6D6, transparent);
-            width: 100%; height: 1.5px; transform: translate(-50%, -50%);
+            width: calc(var(--s) * 7); height: 1.6px;
+            background: linear-gradient(90deg, transparent, rgba(255, 246, 214, .95), transparent);
+            transform: translate(-50%, -50%);
             filter: drop-shadow(0 0 3px rgba(255, 227, 154, .9));
         }
-        .sky-sparkles i.star::after { transform: translate(-50%, -50%) rotate(90deg); }
+        .section-stars i.star::after { transform: translate(-50%, -50%) rotate(90deg); }
         @keyframes skyTwinkle {
-            0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); }
-            45%      { opacity: .95; transform: scale(1) rotate(25deg); }
-            60%      { opacity: .7; }
+            0%, 100% { opacity: 0; transform: scale(.3) rotate(0deg); }
+            40%      { opacity: 1; transform: scale(1.05) rotate(30deg); }
+            55%      { opacity: .75; transform: scale(.9) rotate(40deg); }
+            70%      { opacity: 1; transform: scale(1) rotate(45deg); }
         }
-        @media (prefers-reduced-motion: reduce) { .sky-sparkles { display: none; } }
+        .shooting-star {
+            position: absolute; left: var(--sx); top: var(--sy);
+            width: 140px; height: 2px; border-radius: 2px;
+            background: linear-gradient(90deg, rgba(255, 246, 214, 0), rgba(255, 236, 180, .9) 80%, #fff);
+            filter: drop-shadow(0 0 6px rgba(255, 227, 154, .9));
+            transform: rotate(155deg) translateX(0);
+            transform-origin: right center;
+            opacity: 0;
+            animation: shoot 1.4s cubic-bezier(.3, .1, .3, 1) forwards;
+        }
+        @keyframes shoot {
+            0%   { opacity: 0; transform: rotate(155deg) translateX(0) scaleX(.3); }
+            15%  { opacity: 1; }
+            100% { opacity: 0; transform: rotate(155deg) translateX(320px) scaleX(1); }
+        }
+        @media (prefers-reduced-motion: reduce) { .section-stars { display: none; } }
         @media (min-width: 1025px) {
             .hero-bg { object-position: center 5% !important; }
             .hero-section { background-position: center 5% !important; }
         }
+        .event-time { font-family: 'Playfair Display', serif; font-size: 1.35rem !important; color: #FFE39A !important; letter-spacing: .06em; margin-top: .2rem; }
+        .btn-whatsapp { display: inline-flex !important; align-items: center; gap: .55rem; }
         .gift-text { color: #EDE6D3; line-height: 1.7; margin: 0 auto 1.5rem; max-width: 30rem; }
         .gift-text strong { color: #FFE39A; font-weight: 600; }
-        .bank-card {
-            margin: 0 auto; max-width: 22rem;
-            padding: 1.5rem 1.25rem 1.6rem;
-            border-radius: 1.25rem;
-            border: 1px solid rgba(242, 201, 76, .4);
-            background: linear-gradient(160deg, rgba(31, 63, 143, .35), rgba(5, 14, 38, .5));
+        /* ---------- Tarjeta flotante de datos bancarios ---------- */
+        .bank-modal {
+            position: fixed; inset: 0; z-index: 9500;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.25rem;
+            background: radial-gradient(ellipse at 50% 40%, rgba(20, 45, 110, .55), rgba(3, 8, 24, .82));
+            -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+            animation: bankFade .4s ease both;
         }
-        .bank-name { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: #B9D6F2; margin: 0 0 .4rem; }
-        .bank-number {
-            font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600;
-            letter-spacing: .08em; color: #FFE39A; margin: 0 0 1rem;
-            text-shadow: 0 0 14px rgba(242, 201, 76, .35);
+        .bank-modal[hidden] { display: none; }
+        .bank-modal.closing { animation: bankFadeOut .35s ease both; }
+        .bank-modal.closing .bank-float { animation: bankOut .35s ease both; }
+        @keyframes bankFade { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bankFadeOut { to { opacity: 0; } }
+        .bank-float {
+            position: relative; width: 100%; max-width: 360px;
+            padding: 2.4rem 1.5rem 1.6rem;
+            border-radius: 1.6rem;
+            text-align: center;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(242, 201, 76, .18), transparent 55%),
+                linear-gradient(160deg, #142D6E 0%, #0B1C3D 60%, #071230 100%);
+            border: 1px solid rgba(242, 201, 76, .55);
+            box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .9), 0 0 50px -10px rgba(242, 201, 76, .35), inset 0 1px 0 rgba(255, 227, 154, .25);
+            animation: bankIn .6s cubic-bezier(.16, 1, .3, 1) both, bankFloat 5s ease-in-out .6s infinite;
         }
-        .bank-info { margin: 0 0 1.25rem; display: grid; gap: .45rem; }
-        .bank-info div { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid rgba(242,201,76,.18); padding-top: .45rem; }
-        .bank-info dt { color: #B9D6F2; font-size: .85rem; }
-        .bank-info dd { margin: 0; color: #FFF6DE; font-weight: 500; font-size: .95rem; }
+        @keyframes bankIn {
+            from { opacity: 0; transform: translateY(30px) scale(.92); filter: blur(4px); }
+            to   { opacity: 1; transform: none; filter: none; }
+        }
+        @keyframes bankOut { to { opacity: 0; transform: translateY(16px) scale(.96); } }
+        @keyframes bankFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .bank-close {
+            position: absolute; top: .7rem; right: .8rem;
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid rgba(255, 227, 154, .35); background: rgba(255, 255, 255, .04);
+            color: #FFE39A; font-size: 1.4rem; line-height: 1; cursor: pointer;
+        }
+        .bank-float-icon img { width: 58px; height: auto; margin: -.4rem auto .5rem; display: block; filter: drop-shadow(0 0 12px rgba(242, 201, 76, .45)); }
+        .bank-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.45rem; color: #FFE39A; margin: 0 0 .25rem; }
+        .bank-name { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: #B9D6F2; margin: 0 0 1.3rem; }
+        .bank-row {
+            display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+            text-align: left; padding: .85rem 1rem; margin-bottom: .6rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(242, 201, 76, .18);
+        }
+        .bank-k { display: block; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: #9FB8DD; margin-bottom: .15rem; }
+        .bank-v { display: block; color: #FFF6DE; font-weight: 500; font-size: 1.02rem; letter-spacing: .03em; }
+        .bank-row-main { background: rgba(242, 201, 76, .08); border-color: rgba(242, 201, 76, .4); }
+        .bank-number { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 600; color: #FFE39A; letter-spacing: .07em; text-shadow: 0 0 14px rgba(242, 201, 76, .35); }
+        .copy-btn {
+            flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px;
+            display: grid; place-items: center; cursor: pointer;
+            color: #0B1C3D;
+            background: linear-gradient(135deg, #E0A82E, #FFE39A);
+            border: none; box-shadow: 0 6px 16px rgba(242, 201, 76, .3);
+            transition: transform .2s ease;
+        }
+        .copy-btn:active { transform: scale(.92); }
+        .copy-btn svg { grid-area: 1 / 1; transition: opacity .25s ease, transform .25s ease; }
+        .copy-btn .ic-ok { opacity: 0; transform: scale(.5); }
+        .copy-btn.done svg:first-child { opacity: 0; transform: scale(.5); }
+        .copy-btn.done .ic-ok { opacity: 1; transform: none; }
+        .bank-copied { min-height: 1.2em; margin: .6rem 0 0; font-size: .82rem; color: #FFE39A; font-style: italic; }
     </style>
 </head>
 <body>
@@ -356,12 +438,13 @@
                 <!-- Fiesta de XV -->
                 <div class="event-card">
                     <div class="event-icon modern-icon">
-                        <img src="icono-cumple.png" alt="Pastel de cumpleaños con globos" class="icon-img icon-cumple">
+                        <img src="icono-fiesta.png" alt="Pastel de cumpleaños y copa de celebración" class="icon-img icon-cumple">
                     </div>
                     <h3 class="event-title">Fiesta de Cumpleaños</h3>
                     <div class="event-details">
                         <h4>Día</h4>
                         <p>Martes 29 de Diciembre de 2026</p>
+                        <p class="event-time">8:00 p. m.</p>
                     </div>
                     <div class="event-details">
                         <h4>Lugar</h4>
@@ -431,24 +514,15 @@
 
                 <p class="gift-text">Si desean tener un detalle conmigo, más que algo material, me haría mucha ilusión recibir un aporte económico que me ayude a cumplir mi sueño de participar en <strong>Traje Individual · Carnaval 2027</strong>. Cada granito de arena será recibido con muchísimo cariño y gratitud. 🎭✨</p>
 
-                <button class="btn-wedding gift-more" type="button" id="giftMore" aria-expanded="false" aria-controls="bankCard">Ver más</button>
+                <button class="btn-wedding gift-more" type="button" id="giftMore" aria-haspopup="dialog" aria-controls="bankModal">Ver más</button>
 
-                <div class="bank-card" id="bankCard" hidden>
-                    <p class="bank-name">Banco Popular · Cuenta Corriente</p>
-                    <p class="bank-number" id="bankNumber">820646826</p>
-                    <dl class="bank-info">
-                        <div><dt>Nombre</dt><dd>Aníbal Polanco</dd></div>
-                        <div><dt>Cédula</dt><dd>049-0084483-0</dd></div>
-                    </dl>
-                    <button class="btn-wedding" type="button" id="copyAccount">Copiar número de cuenta</button>
-                </div>
             </div>
         </section>
         <!-- RSVP -->
         <section class="rsvp-section">
             <div class="rsvp-container">
                 <h2 class="section-title">Confirma tu Asistencia</h2>
-                <p class="section-subtitle">Por favor confirma tu asistencia antes del 1 de Diciembre de 2026</p>
+                <p class="section-subtitle">Me encantará contar contigo. Confírmame tu asistencia por WhatsApp con un solo toque.</p>
                 
                 <div class="whatsapp-icon modern-icon">
                     <svg width="80" height="80" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -462,7 +536,7 @@
                     </svg>
                 </div>
 
-                <button class="btn-wedding" onclick="confirmAttendance()">Confirmar Asistencia</button></div>
+                <button class="btn-wedding btn-whatsapp" onclick="confirmAttendance()"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"/></svg>Confirmar por WhatsApp</button></div>
         </section>
 
         <footer class="footer">
@@ -487,6 +561,38 @@
         </footer>
         </div>
 
+        <!-- Tarjeta flotante: datos bancarios -->
+        <div id="bankModal" class="bank-modal" role="dialog" aria-modal="true" aria-labelledby="bankTitle" hidden>
+            <div class="bank-float">
+                <button type="button" class="bank-close" id="bankClose" aria-label="Cerrar">&times;</button>
+                <div class="bank-float-icon" aria-hidden="true"><img src="icono-regalo.png" alt=""></div>
+                <h3 id="bankTitle" class="bank-title">Datos para tu aporte</h3>
+                <p class="bank-name">Banco Popular · Cuenta Corriente</p>
+
+                <div class="bank-row bank-row-main">
+                    <div>
+                        <span class="bank-k">Número de cuenta</span>
+                        <span class="bank-v bank-number" id="bankNumber">820646826</span>
+                    </div>
+                    <button type="button" class="copy-btn" data-copy="820646826" aria-label="Copiar número de cuenta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 0 1 2-2h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="ic-ok" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div class="bank-row">
+                    <div>
+                        <span class="bank-k">Cédula</span>
+                        <span class="bank-v">049-0084483-0</span>
+                    </div>
+                    <button type="button" class="copy-btn" data-copy="049-0084483-0" aria-label="Copiar cédula"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 0 1 2-2h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><svg class="ic-ok" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+                <div class="bank-row">
+                    <div>
+                        <span class="bank-k">Nombre</span>
+                        <span class="bank-v">Aníbal Polanco</span>
+                    </div>
+                </div>
+                <p class="bank-copied" id="bankCopied" aria-live="polite"></p>
+            </div>
+        </div>
+
         <!-- Toast notification -->
         <div id="toast" class="toast">
             <div id="toastContent"></div>
@@ -504,7 +610,7 @@
             } catch(e) {}
         })();
         </script>
-        <script src="JAVAB.js?v=24" defer></script>
-        <script src="intro.js?v=4" defer></script>
+        <script src="JAVAB.js?v=28" defer></script>
+        <script src="intro.js?v=7" defer></script>
 </body>
 </html>

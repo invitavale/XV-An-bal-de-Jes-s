@@ -182,7 +182,7 @@ function updateMusicIcon() {
 
 // Countdown
 function initializeCountdown() {
-    const targetDate = new Date('2026-12-29T18:00:00-04:00').getTime();
+    const targetDate = new Date('2026-12-29T20:00:00-04:00').getTime(); // 8:00 p. m. hora RD
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -380,73 +380,149 @@ function closeDressCodeModal() {
     }
 }
 
-// Regalos: "Ver más" muestra los datos bancarios
+// Regalos: "Ver más" abre la tarjeta flotante con los datos bancarios
 document.addEventListener('DOMContentLoaded', function () {
     const more = document.getElementById('giftMore');
-    const card = document.getElementById('bankCard');
-    if (!more || !card) return;
-    more.addEventListener('click', function () {
-        const open = card.hidden;
-        card.hidden = !open;
-        card.classList.toggle('is-open', open);
-        more.textContent = open ? 'Ver menos' : 'Ver más';
-        more.setAttribute('aria-expanded', String(open));
-        if (open) setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 150);
-    });
-});
+    const modal = document.getElementById('bankModal');
+    const closeBtn = document.getElementById('bankClose');
+    const copiedMsg = document.getElementById('bankCopied');
+    if (!more || !modal) return;
 
-// Brillo: estrellitas que titilan sobre toda la invitación
-document.addEventListener('DOMContentLoaded', function () {
-    const layer = document.createElement('div');
-    layer.className = 'sky-sparkles';
-    layer.setAttribute('aria-hidden', 'true');
-    const count = window.innerWidth < 700 ? 22 : 38;
-    for (let i = 0; i < count; i++) {
-        const el = document.createElement('i');
-        if (Math.random() < 0.35) el.className = 'star';
-        el.style.setProperty('--x', (Math.random() * 100).toFixed(2) + '%');
-        el.style.setProperty('--y', (Math.random() * 100).toFixed(2) + '%');
-        el.style.setProperty('--s', (1.5 + Math.random() * 2.5).toFixed(1) + 'px');
-        el.style.setProperty('--d', (2.8 + Math.random() * 3.5).toFixed(2) + 's');
-        el.style.setProperty('--delay', (-Math.random() * 6).toFixed(2) + 's');
-        layer.appendChild(el);
+    function openModal() {
+        modal.hidden = false;
+        modal.classList.remove('closing');
+        document.documentElement.style.overflow = 'hidden';
+        if (closeBtn) closeBtn.focus({ preventScroll: true });
     }
-    document.body.appendChild(layer);
-});
+    function closeModal() {
+        if (modal.hidden) return;
+        modal.classList.add('closing');
+        setTimeout(function () {
+            modal.hidden = true;
+            modal.classList.remove('closing');
+            document.documentElement.style.overflow = '';
+            if (copiedMsg) copiedMsg.textContent = '';
+            more.focus({ preventScroll: true });
+        }, 330);
+    }
+    more.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
-// Copiar número de cuenta
-document.addEventListener('DOMContentLoaded', function () {
-    const btn = document.getElementById('copyAccount');
-    const num = document.getElementById('bankNumber');
-    if (!btn || !num) return;
-    btn.addEventListener('click', function () {
-        const text = num.textContent.trim();
-        const done = function () {
-            const old = btn.textContent;
-            btn.textContent = '¡Copiado!';
-            setTimeout(function () { btn.textContent = old; }, 2000);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
-        } else { fallbackCopy(text); done(); }
+    // Íconos de copiar (número de cuenta y cédula)
+    modal.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const text = btn.getAttribute('data-copy');
+            const label = btn.getAttribute('aria-label').replace('Copiar ', '');
+            const done = function () {
+                btn.classList.add('done');
+                if (copiedMsg) copiedMsg.textContent = '¡' + label.charAt(0).toUpperCase() + label.slice(1) + ' copiado!';
+                setTimeout(function () { btn.classList.remove('done'); }, 1800);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+            } else { fallbackCopy(text); done(); }
+        });
     });
     function fallbackCopy(text) {
         const ta = document.createElement('textarea');
         ta.value = text; ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
+        ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0, text.length);
         try { document.execCommand('copy'); } catch (e) {}
         document.body.removeChild(ta);
     }
+});
+
+// Brillo: estrellas que titilan DENTRO de cada sección (detrás de las tarjetas
+// y del texto). Se mueven con el scroll y nunca tapan la portada.
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const sections = document.querySelectorAll('.countdown-section, .events-section, .party-section, .gifts-section, .rsvp-section, .footer');
+    const PANELS = '.panel, .event-card, .party-container, .gifts-container, .rsvp-container, .final-panel';
+    const layers = [];
+
+    // Coloca estrellas SOLO en los espacios libres (nunca detrás de tarjetas o texto)
+    function fillLayer(sec, layer) {
+        layer.innerHTML = '';
+        const sr = sec.getBoundingClientRect();
+        if (!sr.width || !sr.height) return;
+        const pad = 10;
+        const blocks = Array.from(sec.querySelectorAll(PANELS)).map(function (el) {
+            const r = el.getBoundingClientRect();
+            return { l: r.left - sr.left - pad, t: r.top - sr.top - pad, r: r.right - sr.left + pad, b: r.bottom - sr.top + pad };
+        });
+        const target = Math.max(8, Math.min(40, Math.round(sr.height / 24)));
+        let placed = 0, tries = 0;
+        while (placed < target && tries < target * 40) {
+            tries++;
+            const x = Math.random() * sr.width, y = Math.random() * sr.height;
+            if (blocks.some(function (b) { return x > b.l && x < b.r && y > b.t && y < b.b; })) continue;
+            const el = document.createElement('i');
+            const big = Math.random() < 0.3;
+            if (big) el.className = 'star';
+            el.style.setProperty('--x', (x / sr.width * 100).toFixed(2) + '%');
+            el.style.setProperty('--y', (y / sr.height * 100).toFixed(2) + '%');
+            el.style.setProperty('--s', (big ? 2.5 + Math.random() * 3 : 1.2 + Math.random() * 2.2).toFixed(1) + 'px');
+            el.style.setProperty('--d', (2.4 + Math.random() * 3.6).toFixed(2) + 's');
+            el.style.setProperty('--delay', (-Math.random() * 6).toFixed(2) + 's');
+            layer.appendChild(el);
+            placed++;
+        }
+    }
+
+    sections.forEach(function (sec) {
+        const layer = document.createElement('div');
+        layer.className = 'section-stars';
+        layer.setAttribute('aria-hidden', 'true');
+        sec.insertBefore(layer, sec.firstChild);
+        layers.push(layer);
+    });
+    function fillAll() { sections.forEach(function (sec, i) { fillLayer(sec, layers[i]); }); }
+    // esperar a que carguen fuentes/imágenes para medir bien
+    window.addEventListener('load', function () { setTimeout(fillAll, 300); });
+    fillAll();
+    let rz, lastW = window.innerWidth;
+    window.addEventListener('resize', function () {
+        if (Math.abs(window.innerWidth - lastW) < 2) return; // ignora barra del navegador al hacer scroll
+        lastW = window.innerWidth;
+        clearTimeout(rz); rz = setTimeout(fillAll, 400);
+    });
+
+    // Estrella fugaz de vez en cuando, en una sección que esté a la vista
+    function shoot() {
+        if (!document.hidden && !document.getElementById('introScreen')) {
+            const visible = layers.filter(function (l) {
+                const r = l.getBoundingClientRect();
+                return r.bottom > 0 && r.top < window.innerHeight;
+            });
+            if (visible.length) {
+                const layer = visible[Math.floor(Math.random() * visible.length)];
+                const st = document.createElement('b');
+                st.className = 'shooting-star';
+                st.style.setProperty('--sx', (25 + Math.random() * 65).toFixed(1) + '%');
+                st.style.setProperty('--sy', (Math.random() * 45).toFixed(1) + '%');
+                layer.appendChild(st);
+                setTimeout(function () { st.remove(); }, 1600);
+            }
+        }
+        setTimeout(shoot, 4500 + Math.random() * 5000);
+    }
+    setTimeout(shoot, 3500);
 });
 
 function showGifts() {
     window.open('https://cuentapro11.github.io/numero-cuenta-ejemplo/', '_blank');
 }
 
+// Confirmación por WhatsApp (809-441-2952, código de país 1)
 function confirmAttendance() {
-    // Ejemplo: aquí se debe colocar el enlace real al formulario de Google Forms.
-    window.open('https://docs.google.com/forms/d/e/1FAIpQLSdIYoM33yAkMmS4DZCRVmO9_IE0gZT4eEw8cV0r2PgWlYE0Ag/viewform?usp=header', '_blank');
+    const phone = '18094412952';
+    const msg = '¡Hola! ✨ Confirmo mi asistencia a la Fiesta de Cumpleaños de Aníbal de Jesús Polanco Viloria, el martes 29 de diciembre de 2026 a las 8:00 p. m. en Royal Palace (Paulino’s Eventos). 🎉\n\nNombre: \nCantidad de personas: ';
+    const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
 }
 
 // Sistema de Toast

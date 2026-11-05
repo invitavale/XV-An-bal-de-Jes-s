@@ -23,7 +23,7 @@
 
     // ---- Ajustes de tiempo ----
     var LEAD_TIME = 1.0;        // seg. antes del final del video en que entra el mensaje
-    var WORD_DELAY = 190;        // ms entre palabra y palabra
+    var CHAR_DELAY = 42;         // ms entre letra y letra (más alto = más lento)
     var TEXT_START = 1700;      // ms desde que entra el mensaje hasta la 1ª palabra
     var SIGN_DURATION = 3200;   // ms que tarda en "escribirse" la firma
     var AUTO_CONTINUE = 8000;   // ms que se queda el mensaje completo antes de avanzar solo
@@ -43,20 +43,28 @@
     video.setAttribute('muted', '');
     try { video.load(); } catch (e) {}
 
-    // Partir el texto del mensaje en palabras para animarlas una a una
-    var words = [];
+    // Partir el texto en letras (agrupadas por palabra para no cortar palabras)
+    var chars = [];
     if (msgText) {
         var raw = msgText.textContent.trim().split(/\s+/);
         msgText.setAttribute('aria-label', msgText.textContent.trim());
         msgText.textContent = '';
         raw.forEach(function (w, i) {
-            var span = document.createElement('span');
-            span.className = 'w';
-            span.setAttribute('aria-hidden', 'true');
-            span.textContent = w;
-            msgText.appendChild(span);
-            if (i < raw.length - 1) msgText.appendChild(document.createTextNode(' '));
-            words.push(span);
+            var word = document.createElement('span');
+            word.className = 'w';
+            word.setAttribute('aria-hidden', 'true');
+            Array.from(w).forEach(function (ch) {
+                var c = document.createElement('span');
+                c.className = 'c';
+                c.textContent = ch;
+                word.appendChild(c);
+                chars.push(c);
+            });
+            msgText.appendChild(word);
+            if (i < raw.length - 1) {
+                msgText.appendChild(document.createTextNode(' '));
+                chars.push(null); // pausa breve en el espacio
+            }
         });
     }
 
@@ -119,11 +127,19 @@
         later(function () { try { video.pause(); } catch (e) {} }, 1800);
 
         var start = reduceMotion ? 600 : TEXT_START;
-        var step = reduceMotion ? 0 : WORD_DELAY;
-        words.forEach(function (w, i) {
-            later(function () { w.classList.add('on'); }, start + i * step);
+        var step = reduceMotion ? 0 : CHAR_DELAY;
+        var t = start;
+        chars.forEach(function (c, i) {
+            if (c) {
+                later(function () { c.classList.add('on'); }, t);
+                // pausa un poquito más en comas y puntos
+                var ch = c.textContent;
+                t += step * (ch === ',' ? 6 : ch === '.' ? 10 : 1);
+            } else {
+                t += step;
+            }
         });
-        var textEnd = start + words.length * step + 500;
+        var textEnd = t + 900;
 
         later(function () { if (msgSign) msgSign.classList.add('on'); }, textEnd);
         var signEnd = textEnd + (reduceMotion ? 100 : SIGN_DURATION);
@@ -145,7 +161,7 @@
     // Mostrar todo el mensaje de golpe (si tocan "Saltar" mientras se escribe)
     function completeMessage() {
         clearTimers();
-        words.forEach(function (w) { w.classList.add('on'); });
+        chars.forEach(function (c) { if (c) c.classList.add('on'); });
         if (msgSign) msgSign.classList.add('on');
         later(leaveToInvitation, 1600);
     }
@@ -168,6 +184,9 @@
         root.classList.remove('intro-active');
         intro.classList.add('is-gone');
 
+        // Estrella fugaz sobre la portada, 2 segundos después de entrar
+        if (!reduceMotion) setTimeout(heroShootingStar, 2000);
+
         var music = document.getElementById('musicPlayer');
         if (music) {
             music.style.display = 'block';
@@ -185,6 +204,18 @@
             root.classList.remove('intro-revealing');
             if (music) music.classList.remove('is-entering');
         }, 3600);
+    }
+
+    // ---------- Estrella fugaz de la portada ----------
+    function heroShootingStar() {
+        var hero = document.querySelector('.hero-section');
+        if (!hero) return;
+        var star = document.createElement('div');
+        star.className = 'hero-shooting-star';
+        star.setAttribute('aria-hidden', 'true');
+        star.innerHTML = '<span class="hss-trail"></span>';
+        hero.appendChild(star);
+        setTimeout(function () { star.remove(); }, 3000);
     }
 
     // ---------- Chispas doradas ----------
