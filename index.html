@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es" class="intro-active">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aníbal de Jesús Polanco Viloria · Fiesta de Cumpleaños</title>
+    <meta name="theme-color" content="#0B1C3D">
+    <link rel="preload" as="image" href="intro-poster.jpg">
+    <link rel="preload" as="image" href="mensaje-fondo.jpg">
+    <link rel="preload" as="font" type="font/woff2" href="fonts/libre-caslon.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="fonts/allura.woff2" crossorigin>
+    <link rel="preload" as="image" href="foto0.jpg?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CCSB.css?v=27">
+    <link rel="stylesheet" href="intro.css?v=4">
+    <noscript><style>.intro{display:none!important}html.intro-active,html.intro-active body{overflow:auto!important;height:auto}html.intro-active .hero-bg,html.intro-active .hero-text>*,html.intro-active .top-garland{opacity:1!important;filter:none!important;scale:1!important;translate:none!important}</style></noscript>
+    <link rel="preload" as="image" href="fondo-cielo.jpg">
+    <style>
+        /* Carrusel: 3 imágenes simultáneamente con foto central destacada */
+        .carousel-track-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+            overflow: visible;
+        }
+        .carousel-item {
+            flex: 0 0 33.333%; /* 3 imágenes por fila en PC */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0; /* usamos gap del track para separación */
+        }
+        .carousel-item img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0;
+            box-shadow: 0 10px 24px rgba(242,201,76,0.35);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        /* Marco tipo polaroid ajustado al tamaño real de cada foto:
+           delgado en los tres lados y un poco más grueso en la base. */
+        .framed-photo {
+            width: auto !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            box-sizing: border-box !important;
+            margin: 0 auto;
+            object-fit: contain !important;
+            background: #F2C94C !important;
+            border: 6px solid #F2C94C !important;
+            border-bottom-width: 20px !important;
+        }
+
+        @media (min-width: 769px) {
+            .carousel-item.is-center .framed-photo {
+                transform: scale(1.12) rotate(-0.2deg);
+                box-shadow: 0 34px 68px rgba(242,201,76,0.45);
+            }
+        }
+        
+        /* Mobile: una imagen centrada */
+        @media (max-width: 768px) {
+            .carousel-item {
+                flex: 0 0 100% !important; /* 1 imagen por vista en móvil */
+                padding: 0 6px !important;
+                height: 380px !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+            .carousel-item img {
+                width: auto !important;
+                height: auto !important;
+                max-width: 100% !important;
+                max-height: 380px !important;
+                object-fit: contain !important;
+                transform: none !important;
+            }
+            .framed-photo {
+                border-width: 4px !important;
+                border-bottom-width: 14px !important;
+            }
+            
+            .carousel-track-container {
+                height: auto !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carousel-item img {
+                width: auto !important;
+                height: auto !important;
+                max-width: 100% !important;
+                max-height: 320px !important;
+                object-fit: contain !important;
+                border-radius: 0;
+                transform: none !important;
+            }
+            .framed-photo {
+                border-width: 3px !important;
+                border-bottom-width: 10px !important;
+            }
+            
+            .carousel-item {
+                flex: 0 0 100% !important;
+                padding: 0 8px !important;
+                height: 320px !important;
+            }
+            
+            .carousel-track-container {
+                height: auto !important;
+            }
+        }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 2;
+            padding: 0 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* Ajuste temporal: mantener altura visible sin tocar el attachment */
+        @media (min-width: 1025px) {
+            .hero-section {
+                background-image: url('foto0.jpg?v=2') !important;
+            }
+        }
+
+
+        /* ---------- Código de vestimenta (sin botón) ---------- */
+        .dress-type {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem !important;
+            font-style: italic;
+            color: #FFF6DE !important;
+            letter-spacing: .04em;
+            margin: -.25rem 0 1rem !important;
+        }
+        .dress-divider {
+            width: 70px; height: 1px; margin: 0 auto 1rem;
+            background: linear-gradient(90deg, transparent, #F2C94C, transparent);
+        }
+        .dress-label {
+            font-size: .72rem !important;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #FFE39A !important;
+            margin-bottom: .9rem !important;
+        }
+        .dress-swatches { display: flex; justify-content: center; margin: 0 0 1rem; }
+        .dress-swatches span {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--c);
+            border: 2px solid rgba(255, 246, 222, .85);
+            box-shadow: 0 4px 10px rgba(0,0,0,.35);
+            margin-left: -9px;
+        }
+        .dress-swatches span:first-child { margin-left: 0; }
+        .dress-swatches span:last-child { margin-left: 6px; }
+        .dress-note { font-size: .88rem; opacity: .85; margin-bottom: 0 !important; }
+        .card-thanks { font-style: italic; color: #FFE39A !important; margin-bottom: 0 !important; }
+
+        /* ---------- Regalos con datos bancarios ---------- */
+        .gifts-container .gift-text { order: 3 !important; }
+        .gifts-container .gift-more { order: 4 !important; }
+        .gifts-container .bank-card { order: 5 !important; }
+        .bank-card[hidden] { display: none; }
+        .bank-card.is-open { animation: bankIn .7s cubic-bezier(.16, 1, .3, 1) both; }
+        @keyframes bankIn {
+            from { opacity: 0; transform: translateY(-10px) scale(.97); filter: blur(4px); }
+            to   { opacity: 1; transform: none; filter: none; }
+        }
+        .icon-cumple { width: 9rem !important; height: auto !important; max-width: none !important; }
+
+        /* ---------- Brillo: estrellas titilando sobre la invitación ---------- */
+        .sky-sparkles { position: fixed; inset: 0; z-index: 900; pointer-events: none; overflow: hidden; }
+        .sky-sparkles i {
+            position: absolute;
+            left: var(--x); top: var(--y);
+            width: var(--s); height: var(--s);
+            border-radius: 50%;
+            background: #FFF6D6;
+            box-shadow: 0 0 6px 1px rgba(255, 227, 154, .9), 0 0 14px 3px rgba(242, 201, 76, .35);
+            opacity: 0;
+            animation: skyTwinkle var(--d) ease-in-out var(--delay) infinite;
+        }
+        .sky-sparkles i.star {
+            border-radius: 0; background: none; box-shadow: none;
+            width: calc(var(--s) * 4); height: calc(var(--s) * 4);
+        }
+        .sky-sparkles i.star::before, .sky-sparkles i.star::after {
+            content: ''; position: absolute; left: 50%; top: 50%;
+            background: linear-gradient(90deg, transparent, #FFF6D6, transparent);
+            width: 100%; height: 1.5px; transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 3px rgba(255, 227, 154, .9));
+        }
+        .sky-sparkles i.star::after { transform: translate(-50%, -50%) rotate(90deg); }
+        @keyframes skyTwinkle {
+            0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); }
+            45%      { opacity: .95; transform: scale(1) rotate(25deg); }
+            60%      { opacity: .7; }
+        }
+        @media (prefers-reduced-motion: reduce) { .sky-sparkles { display: none; } }
+        @media (min-width: 1025px) {
+            .hero-bg { object-position: center 5% !important; }
+            .hero-section { background-position: center 5% !important; }
+        }
+        .gift-text { color: #EDE6D3; line-height: 1.7; margin: 0 auto 1.5rem; max-width: 30rem; }
+        .gift-text strong { color: #FFE39A; font-weight: 600; }
+        .bank-card {
+            margin: 0 auto; max-width: 22rem;
+            padding: 1.5rem 1.25rem 1.6rem;
+            border-radius: 1.25rem;
+            border: 1px solid rgba(242, 201, 76, .4);
+            background: linear-gradient(160deg, rgba(31, 63, 143, .35), rgba(5, 14, 38, .5));
+        }
+        .bank-name { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: #B9D6F2; margin: 0 0 .4rem; }
+        .bank-number {
+            font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 600;
+            letter-spacing: .08em; color: #FFE39A; margin: 0 0 1rem;
+            text-shadow: 0 0 14px rgba(242, 201, 76, .35);
+        }
+        .bank-info { margin: 0 0 1.25rem; display: grid; gap: .45rem; }
+        .bank-info div { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid rgba(242,201,76,.18); padding-top: .45rem; }
+        .bank-info dt { color: #B9D6F2; font-size: .85rem; }
+        .bank-info dd { margin: 0; color: #FFF6DE; font-weight: 500; font-size: .95rem; }
+    </style>
+</head>
+<body>
+    <div class="main-center">
+        <!-- Intro en video: el toque inicia el video y la música -->
+        <div id="introScreen" class="intro" role="button" tabindex="0" aria-label="Toca para abrir la invitación">
+            <div class="intro-backdrop" aria-hidden="true"></div>
+            <video id="introVideo" class="intro-video" src="intro.mp4" poster="intro-poster.jpg"
+                   muted playsinline webkit-playsinline preload="auto" disablepictureinpicture
+                   disableremoteplayback x-webkit-airplay="deny" aria-hidden="true"></video>
+            <div class="intro-vignette" aria-hidden="true"></div>
+            <div class="intro-seal" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="intro-hint">
+                <div class="intro-hint-script">Toca para abrir</div>
+                <div class="intro-hint-sub">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18V5l12-2v13" stroke="#FFE39A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="#FFE39A" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="#FFE39A" stroke-width="2"/></svg>Sube el volumen
+                </div>
+            </div>
+            <div class="intro-loader" aria-hidden="true"></div>
+
+            <!-- Mensaje después del video -->
+            <div id="introMessage" class="intro-message" aria-hidden="true">
+                <div class="msg-backdrop" aria-hidden="true"></div>
+                <div class="msg-stage">
+                    <div class="msg-bg" aria-hidden="true"></div>
+                    <div class="msg-panel">
+                        <p id="msgText" class="msg-text">En esta noche azul, puedo tocar las estrellas con mis manos, puedo pedirlas prestadas al cielo y entregarlas una por una a mis familiares más queridos, y a mis amigos más sinceros, tú eres uno de ellos. Por eso quiero que vengas a buscar tu estrella.</p>
+                    </div>
+                    <div id="msgSign" class="msg-sign">Aníbal</div>
+                    <button id="msgContinue" type="button" class="msg-continue">
+                        Entrar a la invitación
+                        <span class="msg-continue-bar" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="intro-flash" aria-hidden="true"></div>
+            <button id="introSkip" type="button" class="intro-skip">Saltar ›</button>
+        </div>
+
+        <!-- Reproductor de música -->
+        <div id="musicPlayer" class="music-player" style="display: none;">
+            <button id="musicToggle" class="music-button modern-icon" title="Reproducir/Pausar música">
+                <svg id="volumeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#0B1C3D" stroke="#fff" stroke-width="1"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.08" stroke="#0B1C3D" stroke-width="2"></path>
+                    <circle cx="6.5" cy="12" r="1" fill="#FFE39A"/>
+                </svg>
+            </button>
+            <!-- Música de fondo (archivo local, sin YouTube). playsinline + preload para iOS Safari -->
+            <audio id="bgMusic" src="musica.mp3?v=2#t=11" preload="auto" playsinline webkit-playsinline></audio>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <img class="hero-bg" src="foto0.jpg?v=2" alt="Portada XV años de Aníbal de Jesús Polanco Viloria">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="date date-hidden" aria-hidden="true">29.12.2026</div>
+                    <h1 class="names">Aníbal de Jesús<br>Polanco Viloria</h1>
+                    <p class="xv-subtitle">Fiesta de Cumpleaños</p>
+                    <p class="hero-phrase">Te invito a celebrar conmigo una noche mágica<br>bajo un cielo lleno de estrellas</p>
+                    <p class="hero-date">29 · Diciembre · 2026</p>
+                    <div class="scroll-indicator">
+                        <div class="scroll-mouse">
+                            <div class="scroll-wheel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+        <!-- Countdown -->
+        <section class="countdown-section">
+            <div class="panel">
+            <h2 class="section-title">Faltan</h2>
+            <p class="section-subtitle countdown-sub">para una noche bajo las estrellas</p>
+            <div class="countdown-container">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">DÍAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">HORAS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">MINUTOS</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">SEGUNDOS</div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- Fecha y Lugar -->
+        <section class="events-section">
+            <div class="events-container events-container-single">
+                <!-- Fiesta de XV -->
+                <div class="event-card">
+                    <div class="event-icon modern-icon">
+                        <img src="icono-cumple.png" alt="Pastel de cumpleaños con globos" class="icon-img icon-cumple">
+                    </div>
+                    <h3 class="event-title">Fiesta de Cumpleaños</h3>
+                    <div class="event-details">
+                        <h4>Día</h4>
+                        <p>Martes 29 de Diciembre de 2026</p>
+                    </div>
+                    <div class="event-details">
+                        <h4>Lugar</h4>
+                        <p>Royal Palace</p>
+                        <p class="event-address">Paulino’s Eventos</p>
+                    </div>
+                    <button class="btn-wedding" onclick="openLocation('reception')">¿Cómo llegar?</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Party Information -->
+        <section class="party-section">
+            <div class="party-container">
+                <h2 class="section-title">Detalles</h2>
+                <p class="section-subtitle">Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.</p>
+
+                <div class="party-grid">
+                    <div class="party-card dress-card">
+                        <div class="party-icon modern-icon bowtie-icon">
+                            <img src="icono-vestimenta.png" alt="Traje formal" class="icon-img">
+                        </div>
+                        <h3>Código de Vestimenta</h3>
+                        <p class="dress-type">Formal</p>
+                        <div class="dress-divider" aria-hidden="true"></div>
+                        <p class="dress-label">Colores exclusivos del quinceañero</p>
+                        <div class="dress-swatches" role="img" aria-label="Tonos de azul y amarillo">
+                            <span style="--c:#1F3F8F"></span>
+                            <span style="--c:#3A62C4"></span>
+                            <span style="--c:#5C86DE"></span>
+                            <span style="--c:#8BAEEB"></span>
+                            <span style="--c:#BCD3F6"></span>
+                            <span style="--c:#F2C94C"></span>
+                        </div>
+                        <p class="dress-note">Te pedimos amablemente evitar los tonos azules y el amarillo.</p>
+                    </div>
+
+                    <div class="party-card">
+                        <div class="party-icon modern-icon">
+                            <img src="icono-no-invitados.png" alt="No se permiten acompañantes adicionales" class="icon-img">
+                        </div>
+                        <h3>Invitación Personal</h3>
+                        <p>Con mucho cariño, te pedimos respetar el número de personas asignado a tu familia. Para que todo esté perfectamente organizado, no será posible asistir con invitados adicionales sin mi autorización previa.</p>
+                        <p class="card-thanks">¡Gracias por tu comprensión!</p>
+                    </div>
+
+                    <div class="party-card no-kids-card">
+                        <div class="party-icon modern-icon">
+                            <img src="icono-ninos.png" alt="Silueta de un niño con un globo" class="icon-img">
+                        </div>
+                        <h3>No se permiten niños</h3>
+                        <p>Esta noche está pensada como una celebración para jóvenes, con música, baile y un ambiente hecho a su medida. Por eso, con mucho cariño, te pedimos que los más pequeños se queden en casa. ¡Gracias por tu comprensión!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gifts -->
+        <section class="gifts-section">
+            <div class="gifts-container">
+                <h2 class="section-title">Regalos</h2>
+                <p class="section-subtitle">De corazón, gracias por acompañarme y ser parte de este momento tan especial. Para mí, su presencia es el regalo más bonito.</p>
+
+                <div class="gift-icon modern-icon">
+                    <img src="icono-regalo.png" alt="Regalo" class="icon-img">
+                </div>
+
+                <p class="gift-text">Si desean tener un detalle conmigo, más que algo material, me haría mucha ilusión recibir un aporte económico que me ayude a cumplir mi sueño de participar en <strong>Traje Individual · Carnaval 2027</strong>. Cada granito de arena será recibido con muchísimo cariño y gratitud. 🎭✨</p>
+
+                <button class="btn-wedding gift-more" type="button" id="giftMore" aria-expanded="false" aria-controls="bankCard">Ver más</button>
+
+                <div class="bank-card" id="bankCard" hidden>
+                    <p class="bank-name">Banco Popular · Cuenta Corriente</p>
+                    <p class="bank-number" id="bankNumber">820646826</p>
+                    <dl class="bank-info">
+                        <div><dt>Nombre</dt><dd>Aníbal Polanco</dd></div>
+                        <div><dt>Cédula</dt><dd>049-0084483-0</dd></div>
+                    </dl>
+                    <button class="btn-wedding" type="button" id="copyAccount">Copiar número de cuenta</button>
+                </div>
+            </div>
+        </section>
+        <!-- RSVP -->
+        <section class="rsvp-section">
+            <div class="rsvp-container">
+                <h2 class="section-title">Confirma tu Asistencia</h2>
+                <p class="section-subtitle">Por favor confirma tu asistencia antes del 1 de Diciembre de 2026</p>
+                
+                <div class="whatsapp-icon modern-icon">
+                    <svg width="80" height="80" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="4" width="32" height="40" rx="3" fill="#F2C94C"/>
+                        <path d="M28 4v9a3 3 0 0 0 3 3h9" fill="#0B1C3D"/>
+                        <rect x="14" y="20" width="20" height="2.4" rx="1.2" fill="#0B1C3D"/>
+                        <rect x="14" y="26" width="20" height="2.4" rx="1.2" fill="#0B1C3D"/>
+                        <rect x="14" y="32" width="13" height="2.4" rx="1.2" fill="#0B1C3D"/>
+                        <circle cx="34" cy="34" r="8" fill="#0B1C3D"/>
+                        <path d="M30.5 34l2.3 2.3 4.3-4.6" stroke="#F2C94C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+
+                <button class="btn-wedding" onclick="confirmAttendance()">Confirmar Asistencia</button></div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-art" aria-hidden="true">
+                <span class="glow" style="--x:21.8;--y:12.3;--s:20;--d:-1s"></span>
+                <span class="glow" style="--x:84;--y:19.4;--s:17;--d:-2.4s"></span>
+                <span class="win" style="--x:57.4;--y:87.0;--s:2.2;--d:-0s"></span>
+                <span class="win" style="--x:50.0;--y:89.1;--s:2;--d:-1.3s"></span>
+                <span class="win" style="--x:76.6;--y:92.2;--s:2.4;--d:-0.7s"></span>
+                <span class="win" style="--x:81.4;--y:84.2;--s:2;--d:-2.1s"></span>
+                <span class="win" style="--x:65.1;--y:89.4;--s:1.8;--d:-1.6s"></span>
+                <span class="win" style="--x:48.4;--y:82.9;--s:1.6;--d:-0.4s"></span>
+            </div>
+            <div class="final-panel">
+                <div class="footer-content">
+                <p>Con cariño,</p>
+                <h3>Aníbal de Jesús Polanco Viloria</h3>
+                <p class="footer-date">29 de Diciembre, 2026</p>
+                <p class="footer-quote">“Siempre que miro las estrellas, me pongo a soñar.” — Vincent van Gogh</p>
+            </div>
+            </div>
+        </footer>
+        </div>
+
+        <!-- Toast notification -->
+        <div id="toast" class="toast">
+            <div id="toastContent"></div>
+        </div>
+
+        <script>
+        (function() {
+            try {
+                if ('caches' in window) {
+                    caches.keys().then(keys => keys.forEach(k => caches.delete(k))).catch(() => {});
+                }
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister())).catch(() => {});
+                }
+            } catch(e) {}
+        })();
+        </script>
+        <script src="JAVAB.js?v=24" defer></script>
+        <script src="intro.js?v=4" defer></script>
+</body>
+</html>
