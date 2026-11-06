@@ -202,6 +202,19 @@
         .dress-swatches span:first-child { margin-left: 0; }
         .dress-swatches + .dress-swatches { margin-top: -.4rem; }
         .dress-note { font-size: .88rem; opacity: .85; margin-bottom: 0 !important; }
+        .dress-alert {
+            margin-top: 1.1rem;
+            padding: .9rem 1rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(242, 201, 76, .45);
+            background: linear-gradient(160deg, rgba(242, 201, 76, .1), rgba(8, 20, 52, .35));
+        }
+        .dress-alert p { font-size: .88rem; line-height: 1.6; margin: 0 !important; color: #EDE6D3; }
+        .dress-alert .dress-alert-title {
+            font-size: .7rem !important; letter-spacing: .24em; text-transform: uppercase;
+            color: #FFE39A !important; margin-bottom: .35rem !important;
+        }
+        .dress-alert strong { color: #FFE39A; font-weight: 600; }
         .card-thanks { font-style: italic; color: #FFE39A !important; margin-bottom: 0 !important; }
 
         /* ---------- Regalos con datos bancarios ---------- */
@@ -332,6 +345,124 @@
         .copy-btn.done svg:first-child { opacity: 0; transform: scale(.5); }
         .copy-btn.done .ic-ok { opacity: 1; transform: none; }
         .bank-copied { min-height: 1.2em; margin: .6rem 0 0; font-size: .82rem; color: #FFE39A; font-style: italic; }
+
+        /* ---------- Pase de invitación (estilo noche estrellada) ---------- */
+        .pass-ticket[hidden] { display: none !important; }
+        .pass-ticket {
+            --notch: 9px;
+            position: relative;
+            z-index: 3; /* por encima de los destellos decorativos del panel */
+            display: flex;
+            width: min(100%, 330px);
+            margin: 1.8rem auto .4rem;
+            border-radius: 14px;
+            filter: drop-shadow(0 12px 26px rgba(0, 0, 0, .45)) drop-shadow(0 0 18px rgba(242, 201, 76, .18));
+            /* muescas del ticket recortadas a ambos lados de la perforación */
+            -webkit-mask:
+                radial-gradient(circle var(--notch) at 98px 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 98px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+            mask:
+                radial-gradient(circle var(--notch) at 98px 0, transparent 98%, #000) top / 100% 51% no-repeat,
+                radial-gradient(circle var(--notch) at 98px 100%, transparent 98%, #000) bottom / 100% 51% no-repeat;
+            opacity: 0;
+            transform: translateY(16px) scale(.97);
+            transition: opacity .9s ease, transform 1s cubic-bezier(.16, 1, .3, 1);
+        }
+        .pass-ticket.is-visible { opacity: 1; transform: none; }
+        .pass-stub {
+            flex: 0 0 98px;
+            padding: 10px;
+            border-radius: 14px 0 0 14px;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(255, 227, 154, .22), transparent 55%),
+                linear-gradient(160deg, #2A4FA8 0%, #142D6E 55%, #0B1C3D 100%);
+            border-right: 2px dashed rgba(255, 227, 154, .55);
+        }
+        .pass-stub-frame {
+            height: 100%;
+            min-height: 96px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .3rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 227, 154, .65);
+            box-shadow: inset 0 0 12px rgba(242, 201, 76, .15);
+        }
+        .pass-num {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 2.7rem;
+            line-height: 1;
+            background: linear-gradient(180deg, #FFF3C4 0%, #F2C94C 55%, #C9962A 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 8px rgba(242, 201, 76, .45));
+        }
+        .pass-word {
+            font-family: 'Inter', sans-serif;
+            font-size: .66rem;
+            font-weight: 600;
+            letter-spacing: .3em;
+            margin-right: -.3em;
+            color: #FFE39A;
+        }
+        .pass-body {
+            flex: 1;
+            padding: 1rem 1.15rem;
+            border-radius: 0 14px 14px 0;
+            text-align: left;
+            background: linear-gradient(160deg, rgba(20, 45, 110, .96), rgba(8, 20, 52, .97));
+            border: 1px solid rgba(242, 201, 76, .4);
+            border-left: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .pass-label {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .2em;
+            line-height: 1.55;
+            text-transform: uppercase;
+            color: #B9D6F2;
+        }
+        .pass-line {
+            display: block;
+            height: 1px;
+            margin: .55rem 0 .5rem;
+            background: linear-gradient(90deg, #F2C94C, rgba(242, 201, 76, 0));
+        }
+        .pass-people {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.45rem;
+            color: #FFF6DE;
+            text-shadow: 0 0 12px rgba(242, 201, 76, .25);
+        }
+        /* destello dorado que cruza el ticket al aparecer */
+        .pass-shine {
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            pointer-events: none;
+            background: linear-gradient(105deg, transparent 35%, rgba(255, 243, 196, .45) 50%, transparent 65%);
+            background-size: 250% 100%;
+            background-position: 120% 0;
+            mix-blend-mode: screen;
+        }
+        .pass-ticket.is-visible .pass-shine { animation: passShine 2.2s ease .5s 1 both, passShine 2.2s ease 6s infinite; }
+        @keyframes passShine { from { background-position: 120% 0; } to { background-position: -40% 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            .pass-ticket { transition: none; opacity: 1; transform: none; }
+            .pass-shine { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -429,6 +560,22 @@
                     <div class="countdown-label">SEGUNDOS</div>
                 </div>
             </div>
+
+            <!-- Pase: la cantidad viene del enlace (?pases=1 … 8) -->
+            <div class="pass-ticket" id="passTicket" hidden>
+                <div class="pass-stub">
+                    <div class="pass-stub-frame">
+                        <span class="pass-num" id="passNum">1</span>
+                        <span class="pass-word" id="passWord">PASE</span>
+                    </div>
+                </div>
+                <div class="pass-body">
+                    <p class="pass-label">Esta invitación<br>es válida para</p>
+                    <span class="pass-line" aria-hidden="true"></span>
+                    <p class="pass-people" id="passPeople">1 persona</p>
+                </div>
+                <span class="pass-shine" aria-hidden="true"></span>
+            </div>
             </div>
         </section>
 
@@ -486,6 +633,10 @@
                             <span style="--c:#FCEDB5"></span>
                         </div>
                         <p class="dress-note">Te invitamos cordialmente a vestir en tonos azules y amarillos, los mismos colores que lucirá el cumpleañero, para que juntos hagamos brillar esta noche estrellada.</p>
+                        <div class="dress-alert">
+                            <p class="dress-alert-title">✦ Importante ✦</p>
+                            <p>Puedes vestir con los colores de la paleta, pero te pedimos <strong>no usar prendas con estampados o diseños al estilo Van Gogh</strong> (remolinos, cielos pintados o estrellas como en <em>“La noche estrellada”</em>). Ese toque artístico está reservado para el cumpleañero.</p>
+                        </div>
                     </div>
 
                     <div class="party-card">
@@ -616,7 +767,7 @@
             } catch(e) {}
         })();
         </script>
-        <script src="JAVAB.js?v=29" defer></script>
-        <script src="intro.js?v=7" defer></script>
+        <script src="JAVAB.js?v=30" defer></script>
+        <script src="intro.js?v=8" defer></script>
 </body>
 </html>

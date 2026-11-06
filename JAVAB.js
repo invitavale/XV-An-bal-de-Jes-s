@@ -517,10 +517,44 @@ function showGifts() {
     window.open('https://cuentapro11.github.io/numero-cuenta-ejemplo/', '_blank');
 }
 
+// ---------- Pase: cantidad de personas según el enlace ----------
+// Ejemplos:  .../?pases=1   .../?pases=4   (también acepta ?p=4)   Máximo 8.
+// Sin el parámetro (o con un valor fuera de 1–8) el pase no se muestra.
+function getPasses() {
+    try {
+        const q = new URLSearchParams(window.location.search);
+        const n = parseInt(q.get('pases') || q.get('p') || '', 10);
+        return (n >= 1 && n <= 8) ? n : null;
+    } catch (e) { return null; }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const n = getPasses();
+    const ticket = document.getElementById('passTicket');
+    if (!ticket || !n) return;
+    document.getElementById('passNum').textContent = n;
+    document.getElementById('passWord').textContent = n === 1 ? 'PASE' : 'PASES';
+    document.getElementById('passPeople').textContent = n + (n === 1 ? ' persona' : ' personas');
+    ticket.hidden = false;
+    // aparece con animación cuando llega a la vista
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { ticket.classList.add('is-visible'); io.disconnect(); }
+            });
+        }, { threshold: 0.4 });
+        io.observe(ticket);
+    } else {
+        ticket.classList.add('is-visible');
+    }
+});
+
 // Confirmación por WhatsApp (809-441-2952, código de país 1)
 function confirmAttendance() {
     const phone = '18094412952';
-    const msg = '¡Hola! ✨ Confirmo mi asistencia a la Fiesta de Cumpleaños de Aníbal de Jesús Polanco Viloria, el martes 29 de diciembre de 2026 a las 8:00 p. m. en Royal Palace (Paulino’s Eventos). 🎉\n\nNombre: \nCantidad de personas: ';
+    const n = getPasses();
+    const pases = n ? '\nPases asignados: ' + n : '';
+    const msg = '¡Hola! ✨ Confirmo mi asistencia a la Fiesta de Cumpleaños de Aníbal de Jesús Polanco Viloria, el martes 29 de diciembre de 2026 a las 8:00 p. m. en Royal Palace (Paulino’s Eventos). 🎉\n\nNombre: ' + pases + '\nCantidad de personas que asistirán: ';
     const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
     window.open(url, '_blank');
 }

@@ -225,6 +225,17 @@
         document.body.appendChild(canvas);
         var ctx = canvas.getContext('2d');
         if (!ctx) { canvas.remove(); return; }
+        // Seguro: el lienzo SIEMPRE se desvanece y se elimina, aunque el
+        // navegador pause las animaciones (si no, quedarían chispas congeladas
+        // encima de toda la invitación)
+        var killed = false;
+        function kill() {
+            if (killed) return; killed = true;
+            canvas.style.transition = 'opacity .6s ease';
+            canvas.style.opacity = '0';
+            setTimeout(function () { if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }, 650);
+        }
+        setTimeout(kill, 2600);
 
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var W = window.innerWidth, H = window.innerHeight;
@@ -295,8 +306,8 @@
                     ctx.fill();
                 }
             }
-            if (alive > 0) requestAnimationFrame(frame);
-            else canvas.remove();
+            if (alive > 0 && !killed) requestAnimationFrame(frame);
+            else kill();
         }
         requestAnimationFrame(frame);
     }
